@@ -27,3 +27,8 @@ body {
     text-wrap: balance;
   }
 }
+
+a {
+  color: blue; /* Cambia el color del texto del enlace */
+  text-decoration: underline; /* Agrega el subrayado predeterminado del enlace */
+}

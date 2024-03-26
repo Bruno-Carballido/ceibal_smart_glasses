@@ -64,7 +64,7 @@ export default function Home() {
                 <MenuItem value={'redondeado'}>Redondeado</MenuItem>
               </Select>
 
-              <FormControlLabel required control={<Checkbox />} label="He leído y acepto los Términos de Uso" />
+              <FormControlLabel required control={<Checkbox />} label={<span>He leído y acepto los <a href="https://politicas.ceibal.edu.uy/" target="_blank">Términos de Uso</a></span>} />
 
               <Button variant="contained" style={{ backgroundColor: '#00635D' }} >
                 Enviar
