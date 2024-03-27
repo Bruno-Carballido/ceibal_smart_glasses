@@ -1,14 +1,13 @@
 "use client";
 
-import { Container, Button, TextField, Paper, Typography, Select, MenuItem, FormControlLabel, Checkbox, OutlinedInput, FormControl, InputLabel } from '@mui/material';
+import { Container, Button, TextField, Paper, Typography, Select, MenuItem, FormControlLabel, Checkbox, FormControl, InputLabel } from '@mui/material';
 import React, { useState, useEffect } from 'react'; import { styled } from '@mui/system';
-import { FormProvider as Form } from 'react-hook-form';
+
+import styles from './Formulario.module.css'
 
 import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from "react-hook-form";
 
-// Estilos personalizados para el Typography con borde
+// Estilos   para el Typography con borde
 const StyledTypography = styled(Typography)`
     border: 1px solid rgba(0, 0, 0, 0.23); /* Color del borde */
     border-radius: 4px; /* Radio de borde */
@@ -102,30 +101,12 @@ export default function Formulario() {
 
 
     return (<Container maxWidth="md">
-        <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100vh',
-        }}>
-            <Paper style={{
-                textAlign: 'center',
-                backgroundColor: '#f9fafb',
-                padding: '40px',
-                boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-                maxWidth: '600px',
-                width: '100%',
-            }}>
+        <div className={styles.MainDiv}>
+            <Paper className={styles.PaperForm}>
                 <Typography variant="h4" component="h1" className="pb-8">
                     Formulario de solicitud de dispositivos
                 </Typography>
-                <form
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '20px',
-                        textAlign: 'left',
-                    }}>
+                <form className={styles.Formulario}>
                     <label>
                         Correo electrónico
                     </label>
@@ -167,9 +148,7 @@ export default function Formulario() {
                     <ul>
                         {currentErrors.map((e) => {
                             return (
-                                <li style={{ color: 'red' }} key={e}>
-                                    {e}
-                                </li>
+                                <li key={e} className={styles.liItem}>{e}</li>
                             );
                         })}
                     </ul>

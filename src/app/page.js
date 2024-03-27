@@ -1,4 +1,4 @@
-import Formulario from "app/components/formulario/formulario";
+import Formulario from "app/components/formulario/Formulario";
 import Image from "next/image";
 
 
