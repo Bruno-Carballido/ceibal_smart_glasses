@@ -28,9 +28,9 @@ export default function Formulario() {
     let timer = null;
 
     const schema = yup.object().shape({
-        email: yup.string().email().required('Debes ingresar un email válido'),
-        name: yup.string().required('El email debe estar registrado para cargar un nombre válido'),
-        model: yup.string().required('Debes seleccionar un modelo'),
+        email: yup.string().email().required('Debes ingresar un email válido.'),
+        name: yup.string().required('Debes ingrear un email registrado para cargar su nombre.'),
+        model: yup.string().required('Debes seleccionar un modelo.'),
         terms: yup.boolean()
             .required("Debes aceptar los términos de uso.")
             .oneOf([true], "Debes aceptar los términos de uso.")
@@ -85,17 +85,17 @@ export default function Formulario() {
     const handleCheckboxChange = (e) => {
         const stateCheckbox = e.target.checked
         setIsChecked(stateCheckbox);
-        setFormValues((prevValues) => ({ ...prevValues, terms: true }))
+        setFormValues((prevValues) => ({ ...prevValues, terms: stateCheckbox }))
     };
 
     const runValidations = () => {
         schema
             .validate(formValues, { abortEarly: false })
             .then((responseData) => {
-                setCurrentErrors([]);
+                                setCurrentErrors([]);
             })
             .catch((err) => {
-                setCurrentErrors(err.errors);
+                                setCurrentErrors(err.errors);
             });
     };
 
