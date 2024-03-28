@@ -1,0 +1,29 @@
+services:
+
+  web:
+    container_name: smart_glasses
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    env_file:
+      - ./.env
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
+
+  db:
+    container_name: ${MYSQL_HOSTNAME}
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DB}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./init-script-mysql.sql:/docker-entrypoint-initdb.d/init-script-mysql.sql
