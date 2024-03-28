@@ -7,8 +7,7 @@ export async function GET(request) {
         const email = params.get('email')
         const username = await getUsername(email)
         return Response.json({ username })
-    }catch{
+    } catch (error) {
         return Response.json({})
     }
-    
 }

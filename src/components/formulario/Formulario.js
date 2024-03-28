@@ -24,8 +24,29 @@ export default function Formulario() {
     const [isChecked, setIsChecked] = useState(false);
     const [formValues, setFormValues] = useState({});
     const [currentErrors, setCurrentErrors] = useState([]);
+    const [modelValues, setModelValues] = useState([]);
 
     let timer = null;
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const baseUrl = window.location.origin;
+                const url = new URL('/api/model', baseUrl)
+
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Error al obtener los datos');
+                }
+                const result = await response.json();
+                setModelValues(result);
+            } catch (error) {
+                console.error('Error al realizar la solicitud:', error);
+            }
+        }
+        fetchData();
+    }, [])
 
     const schema = yup.object().shape({
         email: yup.string().email().required('Debes ingresar un email válido.'),
@@ -92,10 +113,10 @@ export default function Formulario() {
         schema
             .validate(formValues, { abortEarly: false })
             .then((responseData) => {
-                                setCurrentErrors([]);
+                setCurrentErrors([]);
             })
             .catch((err) => {
-                                setCurrentErrors(err.errors);
+                setCurrentErrors(err.errors);
             });
     };
 
@@ -133,10 +154,11 @@ export default function Formulario() {
                             label="Modelo"
                             onChange={handleChangeModelo}
                         >
-                            <MenuItem value={'aviador'}>Aviador</MenuItem>
-                            <MenuItem value={'mariposa'}>Mariposa</MenuItem>
-                            <MenuItem value={'ojo de gato'}>Ojo de gato</MenuItem>
-                            <MenuItem value={'redondeado'}>Redondeado</MenuItem>
+                            {modelValues.map((model) => (
+                                <MenuItem key={model.id} value={model.id}>
+                                    {model.name}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
 
