@@ -4,6 +4,7 @@ import { Container, Button, TextField, Paper, Typography, Select, MenuItem, Form
 import React, { useState, useEffect } from 'react'; import { styled } from '@mui/system';
 
 import styles from './Formulario.module.css'
+import { useSnackbar } from 'app/components/snackbar';
 
 import * as yup from "yup";
 
@@ -18,6 +19,8 @@ const StyledTypography = styled(Typography)`
 
 
 export default function Formulario() {
+    const { enqueueSnackbar } = useSnackbar();
+
     const [inputModelo, setInputModelo] = useState('');
     const [inputEmail, setInputEmail] = useState('');
     const [inputEmailDelay, setInputEmailDelay] = useState('');
@@ -44,6 +47,9 @@ export default function Formulario() {
                 setModelValues(result);
             } catch (error) {
                 console.error('Error al realizar la solicitud:', error);
+                enqueueSnackbar('Error al cargar modelos, por favor recargue la página.', {
+                    variant: 'warning',
+                });
             }
         }
         fetchData();
@@ -81,6 +87,9 @@ export default function Formulario() {
                 }
             } catch (error) {
                 console.error('Error al realizar la solicitud:', error);
+                enqueueSnackbar('Error al cargar nombre, por favor recargue la página.', {
+                    variant: 'warning',
+                });
             }
         }
         if (inputEmailDelay !== '')
@@ -129,17 +138,24 @@ export default function Formulario() {
                             body: JSON.stringify(formValues), // Convierte los datos a formato JSON y los envía en el cuerpo de la solicitud
                         });
                         if (!response.ok) {
-                            throw new Error('Error al obtener los datos');
+                            enqueueSnackbar('Error al guardar los datos.', {
+                                variant: 'error',
+                            });
+                        } else {
+                            // const result = await response.json();
+                            setInputModelo('')
+                            setInputEmail('')
+                            setInputEmailDelay('')
+                            setUsername('')
+                            setIsChecked(false)
+                            setFormValues({})
+                            enqueueSnackbar('Solicitud enviada correctamente.');
                         }
-                        const result = await response.json();
-                        setInputModelo('')
-                        setInputEmail('')
-                        setInputEmailDelay('')
-                        setUsername('')
-                        setIsChecked(false)
-                        setFormValues({})
                     } catch (error) {
                         console.error('Error al realizar la solicitud:', error);
+                        enqueueSnackbar('Error al guardar los datos.', {
+                            variant: 'error',
+                        });
                     }
                 }
                 saveData()

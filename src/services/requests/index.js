@@ -1,11 +1,12 @@
 const mysqlConnection = require('app/app/database/mysql-connection');
-var moment = require('moment');
+var moment = require('moment-timezone');
 
 
 
 export const saveRequest = async (data) => {
     try {
-        const fechaHora = moment().format('yyyy-MM-DD hh:mm:ss');
+        const fechaHora = moment().tz('America/Montevideo').format('yyyy-MM-DD hh:mm:ss');
+        console.log(fechaHora);
         const results = await new Promise((resolve, reject) => {
             mysqlConnection.query(`insert into glasses_requests (email, name, id_model, date_time) values ('${data.email}', '${data.name}', ${data.model}, '${fechaHora}');`, (error, results) => {
                 if (error) {
@@ -17,6 +18,6 @@ export const saveRequest = async (data) => {
         });
         return Response.json(results);
     } catch (error) {
-        return Response.json([])
+        throw error
     }
 }
