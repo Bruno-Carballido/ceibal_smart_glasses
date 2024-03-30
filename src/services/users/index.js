@@ -11,9 +11,9 @@ export const getUsername = async (email) => {
             }
         }
         )
-        const user_data = await response.json()
-        if (user_data.length == 1)
-            return user_data[0].name
+        const userData = await response.json()
+        if (userData.length == 1)
+            return userData[0].name
     } catch (error) {
         return {}
     }
