@@ -20,6 +20,7 @@ const StyledTypography = styled(Typography)`
 export default function Formulario() {
     const [inputModelo, setInputModelo] = useState('');
     const [inputEmail, setInputEmail] = useState('');
+    const [inputEmailDelay, setInputEmailDelay] = useState('');
     const [username, setUsername] = useState('');
     const [isChecked, setIsChecked] = useState(false);
     const [formValues, setFormValues] = useState({});
@@ -33,7 +34,7 @@ export default function Formulario() {
         const fetchData = async () => {
             try {
                 const baseUrl = window.location.origin;
-                const url = new URL('/api/model', baseUrl)
+                const url = new URL('/api/models', baseUrl)
 
                 const response = await fetch(url);
                 if (!response.ok) {
@@ -62,7 +63,7 @@ export default function Formulario() {
             try {
                 const baseUrl = window.location.origin;
                 const url = new URL('/api/user/username', baseUrl)
-                url.search = new URLSearchParams({ email: inputEmail }).toString();
+                url.search = new URLSearchParams({ email: inputEmailDelay }).toString();
 
                 const response = await fetch(url);
                 if (!response.ok) {
@@ -72,29 +73,30 @@ export default function Formulario() {
                 if ('username' in result) {
                     const username = result.username
                     setUsername(username)
-                    setFormValues((prevValues) => ({ ...prevValues, email: inputEmail, name: username }))
+                    setFormValues((prevValues) => ({ ...prevValues, email: inputEmailDelay, name: username }))
                 }
                 else {
-                    setFormValues((prevValues) => ({ ...prevValues, email: inputEmail }))
+                    setFormValues((prevValues) => ({ ...prevValues, email: inputEmailDelay }))
                     setUsername('')
                 }
             } catch (error) {
                 console.error('Error al realizar la solicitud:', error);
             }
         }
-        if (inputEmail !== '')
+        if (inputEmailDelay !== '')
             fetchData();
-    }, [inputEmail])
+    }, [inputEmailDelay])
 
     const handleEmailUpdate = (event) => {
         setUsername('')
         clearTimeout(timer); // Reinicia el temporizador cada vez que el usuario escribe
         const email = event.target.value
+        setInputEmail(email)
         timer = setTimeout(findUsername, 1000, email); // Espera 1 segundo antes de ejecutar la función
     }
 
     const findUsername = (email) => {
-        setInputEmail(email);
+        setInputEmailDelay(email);
     }
 
     const handleChangeModelo = (event) => {
@@ -114,6 +116,33 @@ export default function Formulario() {
             .validate(formValues, { abortEarly: false })
             .then((responseData) => {
                 setCurrentErrors([]);
+                const saveData = async () => {
+                    try {
+                        const baseUrl = window.location.origin;
+                        const url = new URL('/api/requests', baseUrl)
+
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json', // Tipo de contenido que estás enviando (JSON en este caso)
+                            },
+                            body: JSON.stringify(formValues), // Convierte los datos a formato JSON y los envía en el cuerpo de la solicitud
+                        });
+                        if (!response.ok) {
+                            throw new Error('Error al obtener los datos');
+                        }
+                        const result = await response.json();
+                        setInputModelo('')
+                        setInputEmail('')
+                        setInputEmailDelay('')
+                        setUsername('')
+                        setIsChecked(false)
+                        setFormValues({})
+                    } catch (error) {
+                        console.error('Error al realizar la solicitud:', error);
+                    }
+                }
+                saveData()
             })
             .catch((err) => {
                 setCurrentErrors(err.errors);
@@ -133,6 +162,7 @@ export default function Formulario() {
                     </label>
                     <TextField
                         variant="outlined"
+                        value={inputEmail}
                         label="Correo electrónico"
                         fullWidth
                         onChange={handleEmailUpdate}

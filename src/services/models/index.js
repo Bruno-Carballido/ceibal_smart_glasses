@@ -1,6 +1,6 @@
 const mysqlConnection = require('app/app/database/mysql-connection');
 
-export async function GET() {
+export const getModels = async () => {
     try {
         const results = await new Promise((resolve, reject) => {
             mysqlConnection.query('select * from models;', (error, results) => {
@@ -16,3 +16,4 @@ export async function GET() {
         return Response.json([])
     }
 }
+

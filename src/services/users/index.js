@@ -1,4 +1,3 @@
-import { headers } from "next/headers"
 import { goresturls } from "./urls"
 import { env } from "app/config/env"
 
