@@ -10,7 +10,7 @@ import { useSnackbar } from 'app/components/snackbar';
 
 import * as yup from "yup";
 
-// Estilos   para el Typography con borde
+// Estilos para el Typography con borde
 const StyledTypography = styled(Typography)`
     border: 1px solid rgba(0, 0, 0, 0.23); /* Color del borde */
     border-radius: 4px; /* Radio de borde */
@@ -21,10 +21,13 @@ const StyledTypography = styled(Typography)`
 
 
 export default function Formulario() {
+    // Variable utilizada para desplegar las notificaciones
     const { enqueueSnackbar } = useSnackbar()
 
+    // Variable usada para guardar los modelos de smart glasses
     const [modelValues, setModelValues] = useState([])
 
+    // Variables para los campos del formulario
     const [inputModelo, setInputModelo] = useState('')
     const [inputEmail, setInputEmail] = useState('')
     const [inputEmailDelay, setInputEmailDelay] = useState('')
@@ -41,6 +44,7 @@ export default function Formulario() {
     let timer = null
 
 
+    // useEffect usado para traer los modelos al cargar la web
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -64,6 +68,7 @@ export default function Formulario() {
         fetchData()
     }, [])
 
+    // Defino los campos del form y los errores que se deben mostrar en caso de que falte uno o el formato sea incorrecto
     const schema = yup.object().shape({
         email: yup.string().email('Debes ingresar un email válido.').required('Debes ingresar un email válido.'),
         name: yup.string().required('Debes ingrear un email registrado para cargar su nombre.'),
@@ -73,6 +78,7 @@ export default function Formulario() {
             .oneOf([true], "Debes aceptar los términos de uso.")
     })
 
+    // useEffect que se utiliza para cargar el nombre de usuario tras actualizarse el email
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -110,6 +116,7 @@ export default function Formulario() {
         }
     }, [inputEmailDelay])
 
+    // Función que dispara carga de nombre de usuario tras 1 segundo si no hay más cambios en el campo email
     const handleEmailUpdate = (event) => {
         setUsername('')
         setLoadingName(true)
@@ -124,11 +131,7 @@ export default function Formulario() {
         clearTimeout(timer) // Reinicia el temporizador cada vez que el usuario escribe
         const email = event.target.value
         setInputEmail(email)
-        timer = setTimeout(findUsername, 1000, email) // Espera 1 segundo antes de ejecutar la función
-    }
-
-    const findUsername = (email) => {
-        setInputEmailDelay(email)
+        timer = setTimeout(setInputEmailDelay, 1000, email) // Espera 1 segundo antes de ejecutar la función
     }
 
     const handleChangeModelo = (event) => {
@@ -143,6 +146,7 @@ export default function Formulario() {
         setFormValues((prevValues) => ({ ...prevValues, terms: stateCheckbox }))
     }
 
+    // Función que valida los campos y hace submit del form en caso de estar todo correcto
     const runValidations = () => {
         setLoadingBtn(true)
         schema
