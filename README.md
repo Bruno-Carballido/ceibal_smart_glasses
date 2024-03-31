@@ -5,7 +5,7 @@ Este proyecto fue realizado por Bruno Carballido en el marco del desafio técnic
 ## Tecnologías utilizadas
 
 ### Nextjs
-Este proyecto utuliza Next.js tanto para el backend como para el frontend, aprovechando las funcionalidades de lado del servidor que este proporciona.
+Este proyecto utiliza Next.js tanto para el backend como para el frontend, aprovechando las funcionalidades de lado del servidor que este proporciona.
 
 ### Docker
 Docker es utilizado para facilitar la ejecución del proyecto, permitiendo desplegar una base de datos MySQL en conjunto con la aplicación web de forma que estas sean accesibles entre sí. También cuenta con generación automática de la base de datos y carga de datos iniciales. 

@@ -15,6 +15,6 @@ export const getUsername = async (email) => {
         if (userData.length == 1)
             return userData[0].name
     } catch (error) {
-        return {}
+        throw error
     }
 }

@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server'
 import { getUsername } from "app/services/users"
 
 export async function GET(request) {
@@ -6,8 +7,8 @@ export async function GET(request) {
 
         const email = params.get('email')
         const username = await getUsername(email)
-        return Response.json({ username })
+        return NextResponse.json({ message: "OK", username }, { status: 201 });
     } catch (error) {
-        return Response.json({})
+        return NextResponse.json({ message: "Error", error }, { status: 500 });
     }
 }

@@ -44,7 +44,7 @@ export default function Formulario() {
                     throw new Error('Error al obtener los datos');
                 }
                 const result = await response.json();
-                setModelValues(result);
+                setModelValues(result.models);
             } catch (error) {
                 console.error('Error al realizar la solicitud:', error);
                 enqueueSnackbar('Error al cargar modelos, por favor recargue la página.', {

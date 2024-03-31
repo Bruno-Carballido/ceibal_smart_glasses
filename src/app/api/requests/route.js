@@ -8,10 +8,9 @@ export async function POST(request) {
             const result = await saveRequest(body);
             return NextResponse.json({ message: "OK", result }, { status: 201 });
         } catch (error) {
-            console.log(error);
             return NextResponse.json({ message: "Error", error }, { status: 500 });
         }
     } catch (error) {
-        return Response.json([])
+        return NextResponse.json({ message: "Error", error }, { status: 500 });
     }
 }

@@ -11,9 +11,9 @@ export const getModels = async () => {
                 }
             });
         });
-        return Response.json(results);
+        return results;
     } catch (error) {
-        return Response.json([])
+        throw error
     }
 }
 

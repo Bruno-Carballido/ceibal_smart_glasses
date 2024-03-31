@@ -8,7 +8,8 @@ export const saveRequest = async (data) => {
         const fechaHora = moment().tz('America/Montevideo').format('yyyy-MM-DD hh:mm:ss');
         console.log(fechaHora);
         const results = await new Promise((resolve, reject) => {
-            mysqlConnection.query(`insert into glasses_requests (email, name, id_model, date_time) values ('${data.email}', '${data.name}', ${data.model}, '${fechaHora}');`, (error, results) => {
+            var request = { email: data.email, name: data.name, id_model: data.model, date_time: fechaHora };
+            mysqlConnection.query(`INSERT INTO glasses_requests SET ?;`, request, (error, results) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16,7 +17,7 @@ export const saveRequest = async (data) => {
                 }
             });
         });
-        return Response.json(results);
+        return results;
     } catch (error) {
         throw error
     }

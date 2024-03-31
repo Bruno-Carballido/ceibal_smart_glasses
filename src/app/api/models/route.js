@@ -1,5 +1,12 @@
+import { NextResponse } from 'next/server'
 import { getModels } from "app/services/models"
 
 export async function GET() {
-    return getModels()
+    try {
+        const models = await getModels()
+        return NextResponse.json({ message: "OK", models }, { status: 201 });
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ message: "Error", error }, { status: 500 });
+    }
 }
