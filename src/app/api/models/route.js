@@ -6,7 +6,6 @@ export async function GET() {
         const models = await getModels()
         return NextResponse.json({ message: "OK", models }, { status: 201 });
     } catch (error) {
-        console.log(error);
         return NextResponse.json({ message: "Error", error }, { status: 500 });
     }
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import { Container, Button, TextField, Paper, Typography, Select, MenuItem, FormControlLabel, Checkbox, FormControl, InputLabel, Stack } from '@mui/material';
+import { Container, TextField, Paper, Typography, Select, MenuItem, FormControlLabel, Checkbox, FormControl, InputLabel, Stack } from '@mui/material';
 import React, { useState, useEffect } from 'react'; import { styled } from '@mui/system';
 import CircularProgress from '@mui/material/CircularProgress';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import styles from './Formulario.module.css'
 import { useSnackbar } from 'app/components/snackbar';
@@ -34,6 +35,8 @@ export default function Formulario() {
     const [currentErrors, setCurrentErrors] = useState([])
 
     const [loadingName, setLoadingName] = useState(false)
+    const [loadingModel, setLoadingModel] = useState(true)
+    const [loadingBtn, setLoadingBtn] = useState(false)
 
     let timer = null
 
@@ -50,8 +53,9 @@ export default function Formulario() {
                 }
                 const result = await response.json()
                 setModelValues(result.models)
+                setLoadingModel(false)
             } catch (error) {
-                console.error('Error al realizar la solicitud:', error)
+                // console.error('Error al realizar la solicitud:', error)
                 enqueueSnackbar('Error al cargar modelos, por favor recargue la página.', {
                     variant: 'warning',
                 })
@@ -140,7 +144,7 @@ export default function Formulario() {
     }
 
     const runValidations = () => {
-        console.log(formValues);
+        setLoadingBtn(true)
         schema
             .validate(formValues, { abortEarly: false })
             .then((responseData) => {
@@ -171,11 +175,13 @@ export default function Formulario() {
                             setFormValues({})
                             enqueueSnackbar('Solicitud enviada correctamente.')
                         }
+                        setLoadingBtn(false)
                     } catch (error) {
-                        console.error('Error al realizar la solicitud:', error)
+                        // console.error('Error al realizar la solicitud:', error)
                         enqueueSnackbar('Error al guardar los datos.', {
                             variant: 'error',
                         })
+                        setLoadingBtn(false)
                     }
                 }
                 saveData()
@@ -212,9 +218,12 @@ export default function Formulario() {
                     <StyledTypography variant="p" component="p">
                         {username}
                     </StyledTypography>
-                    <label>
-                        Modelo de lente
-                    </label>
+                    <Stack direction="row">
+                        {loadingModel && <CircularProgress size={20} className='mr-2' />}
+                        <label>
+                            Modelo de lente
+                        </label>
+                    </Stack>
                     <FormControl>
                         <InputLabel id="demo-multiple-checkbox-label">Modelo</InputLabel>
                         <Select
@@ -244,9 +253,9 @@ export default function Formulario() {
                         })}
                     </ul>
 
-                    <Button variant="contained" style={{ backgroundColor: '#00635D' }} onClick={runValidations} >
+                    <LoadingButton loading={loadingBtn} variant="contained" style={{ backgroundColor: '#00635D' }} onClick={runValidations} >
                         Enviar
-                    </Button>
+                    </LoadingButton>
                 </form>
             </Paper>
         </div>
