@@ -1,0 +1,18 @@
+FROM node:21-bullseye
+
+# CONTAINER_SOURCE_PATH
+WORKDIR /var/www/html
+
+# Copiando los package.json para instalar dependencias
+COPY package*.json ./
+
+# Instalando dependencias
+RUN npm i
+
+# Agregando los archivos del proyecto.
+ADD . .
+
+# Exponiendo el puerto 3000.
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
