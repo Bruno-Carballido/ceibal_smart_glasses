@@ -10,7 +10,6 @@ import { useSnackbar } from 'app/components/snackbar';
 
 import * as yup from "yup";
 
-
 // Estilos para el Typography con borde
 const StyledTypography = styled(Typography)`
     border: 1px solid rgba(0, 0, 0, 0.23); /* Color del borde */
@@ -29,7 +28,6 @@ export default function Formulario() {
     const [modelValues, setModelValues] = useState([])
 
     // Variables para los campos del formulario
-
     const [inputModelo, setInputModelo] = useState('')
     const [inputEmail, setInputEmail] = useState('')
     const [inputEmailDelay, setInputEmailDelay] = useState('')
