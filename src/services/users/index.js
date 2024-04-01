@@ -13,7 +13,7 @@ export const getUsername = async (email) => {
         }
         )
         const userData = await response.json()
-        if (userData.length == 1)
+                if (userData.length == 1)
             return userData[0].name
     } catch (error) {
         throw error
