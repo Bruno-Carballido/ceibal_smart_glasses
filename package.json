@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -22,13 +23,19 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest-fetch-mock": "^0.2.2",
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@testing-library/react": "^14.2.2",
+    "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
+    "jsdom": "^24.0.0",
     "postcss": "^8",
-    "tailwindcss": "^3.3.0"
+    "tailwindcss": "^3.3.0",
+    "vitest": "^1.4.0"
   }
 }
