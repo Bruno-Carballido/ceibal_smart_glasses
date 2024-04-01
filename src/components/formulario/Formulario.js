@@ -179,18 +179,18 @@ export default function Formulario() {
                             setFormValues({})
                             enqueueSnackbar('Solicitud enviada correctamente.')
                         }
-                        setLoadingBtn(false)
                     } catch (error) {
                         // console.error('Error al realizar la solicitud:', error)
                         enqueueSnackbar('Error al guardar los datos.', {
                             variant: 'error',
                         })
-                        setLoadingBtn(false)
                     }
                 }
                 saveData()
+                setLoadingBtn(false)
             })
             .catch((err) => {
+                setLoadingBtn(false)
                 setCurrentErrors(err.errors)
             })
     }
