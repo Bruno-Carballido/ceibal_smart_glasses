@@ -14,7 +14,7 @@ export const getModels = async () => {
         });
         return results;
     } catch (error) {
-        throw error
+                throw error
     }
 }
 

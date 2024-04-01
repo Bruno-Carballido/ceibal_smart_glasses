@@ -19,3 +19,9 @@ Para iniciar el proyecto, es necesario ejecutar el siguiente comando desde la ra
 > docker compose up --build
 
 Al terminar de iniciar Docker el sitio debería estar disponible en http://localhost:3000/.
+
+## Ejecución de tests
+
+Para la ejecución de los tests es necesario hacerlo desde dentro de Docker por eso el comando a utilizar es el siguiente:
+
+> docker exec -ti smart_glasses npm run test

@@ -68,7 +68,6 @@ export default function Formulario() {
         fetchData()
     }, [])
 
-
     // Defino los campos del form y los errores que se deben mostrar en caso de que falte uno o el formato sea incorrecto
     const schema = yup.object().shape({
         email: yup.string().email('Debes ingresar un email válido.').required('Debes ingresar un email válido.'),
@@ -78,7 +77,6 @@ export default function Formulario() {
             .required("Debes aceptar los términos de uso.")
             .oneOf([true], "Debes aceptar los términos de uso.")
     })
-
 
     // useEffect que se utiliza para cargar el nombre de usuario tras actualizarse el email
     useEffect(() => {
@@ -117,7 +115,6 @@ export default function Formulario() {
             setLoadingName(false)
         }
     }, [inputEmailDelay])
-
 
     // Función que dispara carga de nombre de usuario tras 1 segundo si no hay más cambios en el campo email
     const handleEmailUpdate = (event) => {
